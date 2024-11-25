@@ -8,5 +8,5 @@ export const DatabaseConfig = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  secret: process.env.JWT_SECRET
+  secret: process.env.JWT_SECRET,
 };

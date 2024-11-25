@@ -19,7 +19,7 @@ export class AuthService {
     return result.rows[0];
   }
 
-  async validateUser(username: string, password: string) {
+  async validateUser (username: string, password: string) {
     const query = `SELECT * FROM users WHERE username = $1`;
     const result = await this.pool.query(query, [username]);
     const user = result.rows[0];
@@ -37,5 +37,5 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
-  }  
+  }
 }

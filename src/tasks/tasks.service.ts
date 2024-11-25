@@ -1,6 +1,8 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Pool } from 'pg';
 import { DatabaseConfig } from '../config/database.config';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
 export class TasksService {
@@ -10,7 +12,7 @@ export class TasksService {
     this.pool = new Pool(DatabaseConfig);
   }
 
-  async createTask(userId: number, body: any) {
+  async createTask(userId: number, body: CreateTaskDto) {
     const { title, description, metadata } = body;
     const query = `
       INSERT INTO tasks (user_id, title, description, metadata)
@@ -24,7 +26,6 @@ export class TasksService {
       throw new InternalServerErrorException(error.message);
     }
   }
-  
 
   async getTasks(userId: number) {
     const query = `
@@ -55,7 +56,7 @@ export class TasksService {
     }
   }
 
-  async updateTask(userId: number, taskId: string, body: any) {
+  async updateTask(userId: number, taskId: string, body: UpdateTaskDto) {
     if (Object.keys(body).length === 0) {
       throw new InternalServerErrorException('No fields provided for update');
     }
@@ -85,7 +86,6 @@ export class TasksService {
       throw new InternalServerErrorException(error.message);
     }
   }
-  
 
   async deleteTask(userId: number, taskId: string) {
     const query = `
