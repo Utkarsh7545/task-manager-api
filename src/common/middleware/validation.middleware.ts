@@ -1,15 +1,24 @@
-import { Injectable, NestMiddleware, BadRequestException } from '@nestjs/common';
+import { Injectable, NestMiddleware, BadRequestException, Inject } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import * as Joi from 'joi';
 
 @Injectable()
 export class ValidationMiddleware implements NestMiddleware {
-  constructor(private schema: Joi.ObjectSchema) {}
+  constructor(
+    @Inject('VALIDATION_FUNCTION') private readonly validate: (body: any) => string | null,
+  ) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    const { error } = this.schema.validate(req.body);
-    if (error) {
-      throw new BadRequestException(error.details[0].message);
+    if (['GET', 'DELETE'].includes(req.method)) {
+      return next();
+    }
+
+    if (!req.body || typeof req.body !== 'object') {
+      throw new BadRequestException('Request body is required and must be an object');
+    }
+
+    const errorMessage = this.validate(req.body);
+    if (errorMessage) {
+      throw new BadRequestException(errorMessage);
     }
     next();
   }
