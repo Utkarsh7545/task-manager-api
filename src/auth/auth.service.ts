@@ -1,7 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Pool } from 'pg';
+// eslint-disable-next-line import/extensions
 import { DatabaseConfig } from '../config/database.config';
 
 @Injectable()
@@ -19,16 +20,16 @@ export class AuthService {
     return result.rows[0];
   }
 
-  async validateUser (username: string, password: string) {
+  async validateUser(username: string, password: string) {
     const query = `SELECT * FROM users WHERE username = $1`;
     const result = await this.pool.query(query, [username]);
     const user = result.rows[0];
-  
+
     if (!user) return null;
-  
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return null;
-  
+
     return user;
   }
 

@@ -4,7 +4,7 @@ import { IsString, IsOptional, IsObject } from 'class-validator';
 export class UpdateTaskDto {
   @ApiProperty({
     description: 'Title',
-    example: 'Nodejs'
+    example: 'Nodejs',
   })
   @IsString()
   @IsOptional()
@@ -12,7 +12,7 @@ export class UpdateTaskDto {
 
   @ApiProperty({
     description: 'Description',
-    example: 'Lecture  Nodejs'
+    example: 'Lecture  Nodejs',
   })
   @IsString()
   @IsOptional()
@@ -20,7 +20,7 @@ export class UpdateTaskDto {
 
   @ApiProperty({
     description: 'Metadata',
-    example: {'dueDate': '2024-12-20', 'priority': 'high'}
+    example: { dueDate: '2024-12-20', priority: 'high' },
   })
   @IsObject()
   @IsOptional()

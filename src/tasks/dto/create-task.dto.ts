@@ -4,7 +4,7 @@ import { IsString, IsNotEmpty, IsObject } from 'class-validator';
 export class CreateTaskDto {
   @ApiProperty({
     description: 'Title',
-    example: 'Nodejs'
+    example: 'Nodejs',
   })
   @IsString()
   @IsNotEmpty()
@@ -12,7 +12,7 @@ export class CreateTaskDto {
 
   @ApiProperty({
     description: 'Description',
-    example: 'Lecture  Nodejs'
+    example: 'Lecture  Nodejs',
   })
   @IsString()
   @IsNotEmpty()
@@ -20,7 +20,7 @@ export class CreateTaskDto {
 
   @ApiProperty({
     description: 'Metadata',
-    example: {'dueDate': '2024-12-20', 'priority': 'high'}
+    example: { dueDate: '2024-12-20', priority: 'high' },
   })
   @IsObject()
   metadata: object;

@@ -4,7 +4,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
 export class RegisterDto {
   @ApiProperty({
     description: 'Username',
-    example: 'utkarsh7545'
+    example: 'utkarsh7545',
   })
   @IsString()
   @IsNotEmpty()
@@ -12,7 +12,7 @@ export class RegisterDto {
 
   @ApiProperty({
     description: 'Password',
-    example: 'utkarsh'
+    example: 'utkarsh',
   })
   @IsString()
   @IsNotEmpty()

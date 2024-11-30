@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Pool } from 'pg';
 import { DatabaseConfig } from '../config/database.config';
@@ -18,7 +19,7 @@ export class TasksService {
       INSERT INTO tasks (user_id, title, description, metadata)
       VALUES ($1, $2, $3, $4) RETURNING *;
     `;
-    const values = [userId, title, description, metadata || {}]; 
+    const values = [userId, title, description, metadata || {}];
     try {
       const result = await this.pool.query(query, values);
       return result.rows[0];
@@ -60,16 +61,18 @@ export class TasksService {
     if (Object.keys(body).length === 0) {
       throw new InternalServerErrorException('No fields provided for update');
     }
-  
+
     const fields = [];
     const values = [userId, taskId];
     let index = 2;
-  
+
+    // eslint-disable-next-line guard-for-in, no-restricted-syntax
     for (const key in body) {
+      // eslint-disable-next-line no-plusplus
       fields.push(`${key} = $${++index}`);
       values.push(body[key]);
     }
-  
+
     const query = `
       UPDATE tasks
       SET ${fields.join(', ')}
